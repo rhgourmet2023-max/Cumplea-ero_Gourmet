@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Feliz Cumpleaños | Gourmet Baja Farms</title>
+<style>
+:root{--g1:#0f3d2e;--g2:#1f5b44;--olive:#6b7d3b;--gold:#d4af37;--white:#fff;}
+*{box-sizing:border-box;margin:0;padding:0;font-family:Segoe UI,sans-serif}
+body{overflow:hidden;color:#fff;background:
+radial-gradient(circle at top right,rgba(212,175,55,.18),transparent 30%),
+linear-gradient(135deg,var(--g1),var(--g2));height:100vh}
+.screen{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;padding:20px;transition:.8s}
+.hidden{opacity:0;visibility:hidden;transform:scale(.95)}
+.card{max-width:900px;width:100%;padding:40px;border-radius:28px;text-align:center;
+background:rgba(255,255,255,.08);backdrop-filter:blur(18px);border:1px solid rgba(255,255,255,.15)}
+.logo{max-width:260px;margin-bottom:20px}
+h1{font-size:clamp(2rem,5vw,3.4rem)}
+p{margin:15px 0;line-height:1.7}
+.btn{padding:16px 30px;border:none;border-radius:999px;background:linear-gradient(135deg,#d4af37,#f3df97);font-weight:700;cursor:pointer}
+.candles{display:flex;justify-content:center;gap:20px;margin-bottom:5px}
+.candle{width:12px;height:45px;background:#fff;position:relative;border-radius:4px}
+.flame{position:absolute;top:-18px;left:50%;transform:translateX(-50%);width:14px;height:20px;background:gold;border-radius:50%;box-shadow:0 0 15px gold;animation:f .15s infinite alternate}
+@keyframes f{to{transform:translateX(-50%) scale(1.15)}}
+.off{opacity:0}
+.smoke{position:absolute;top:-10px;left:50%;width:10px;height:10px;background:rgba(255,255,255,.6);border-radius:50%;opacity:0}
+.show{animation:s 1.5s forwards}
+@keyframes s{from{opacity:.8;transform:translateX(-50%) scale(.4)}to{opacity:0;transform:translateX(-50%) translateY(-50px) scale(2.4)}}
+.cake{width:260px;margin:10px auto}
+.layer{height:70px;background:linear-gradient(#e7cba3,#c89f6d);margin:auto;border-radius:12px}
+.top{width:180px}.mid{width:220px}
+.icing{height:18px;background:#fff3dc;border-radius:12px}
+#confetti{position:fixed;inset:0;pointer-events:none}
+.piece{position:absolute;width:10px;height:18px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(120vh) rotate(720deg);opacity:0}}
+.signature img{max-width:240px}
+</style>
+</head>
+<body>
+<script>
+const LOGO_GOURMET="logo-gourmet.png";
+const FIRMA_RH="firma-rh.png";
+const nombre=new URLSearchParams(location.search).get("nombre")||"Colaborador";
+</script>
+
+<section id="s1" class="screen">
+<div class="card">
+<img id="logo1" class="logo">
+<h1 id="titulo"></h1>
+<p>Gourmet Baja Farms celebra contigo este día tan especial.</p><br>
+<button class="btn" onclick="mostrar2()">🎁 Ver mi sorpresa</button>
+</div></section>
+
+<section id="s2" class="screen hidden">
+<div class="card">
+<h1>🎂 Pide un deseo...</h1><br>
+<div class="candles">
+<div class="candle"><div class="flame"></div><div class="smoke"></div></div>
+<div class="candle"><div class="flame"></div><div class="smoke"></div></div>
+<div class="candle"><div class="flame"></div><div class="smoke"></div></div>
+</div>
+<div class="cake">
+<div class="layer top"><div class="icing"></div></div>
+<div class="layer mid"><div class="icing"></div></div>
+<div class="layer"><div class="icing"></div></div>
+</div><br>
+<button class="btn" onclick="soplar()">🕯️ Soplar velitas</button>
+</div></section>
+
+<section id="s3" class="screen hidden">
+<div class="card">
+<img id="logo3" class="logo">
+<h1>🎉 ¡Muchas felicidades!</h1>
+<p>Hoy celebramos tu día y todo lo bueno que está por venir.</p>
+<p>Esperamos que tus deseos se hagan realidad y que disfrutes un año lleno de salud, felicidad y éxito.</p>
+<p>¡Muchas felicidades! 🎉</p>
+<div class="signature"><img id="firma"></div>
+</div></section>
+
+<div id="confetti"></div>
+
+<script>
+titulo.innerHTML=`🎉 ¡Feliz Cumpleaños, ${nombre}! 🎉`;
+logo1.src=LOGO_GOURMET;logo3.src=LOGO_GOURMET;firma.src=FIRMA_RH;
+
+function mostrar2(){s1.classList.add('hidden');setTimeout(()=>s2.classList.remove('hidden'),400)}
+function soplar(){
+document.querySelectorAll('.flame').forEach(x=>x.classList.add('off'));
+document.querySelectorAll('.smoke').forEach(x=>x.classList.add('show'));
+setTimeout(()=>{s2.classList.add('hidden');setTimeout(()=>{s3.classList.remove('hidden');confeti();},500)},1700);
+}
+function confeti(){
+const c=document.getElementById('confetti');
+for(let i=0;i<180;i++){
+let d=document.createElement('div');
+d.className='piece';
+d.style.left=Math.random()*100+'vw';
+d.style.background=Math.random()>.5?'#d4af37':'#6b7d3b';
+d.style.animationDuration=(3+Math.random()*3)+'s';
+c.appendChild(d);
+setTimeout(()=>d.remove(),7000);
+}
+setTimeout(confeti,2500);
+}
+</script>
+</body>
+</html>
